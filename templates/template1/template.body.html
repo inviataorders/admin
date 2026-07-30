@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>{{OG_TITLE}}</title>
+  <meta name="description" content="{{OG_DESCRIPTION}}" />
+  <link rel="canonical" href="{{CANONICAL_URL}}" />
+  <meta property="og:title" content="{{OG_TITLE}}" />
+  <meta property="og:description" content="{{OG_DESCRIPTION}}" />
+  <meta property="og:image" content="{{OG_IMAGE}}" />
+  <meta property="og:image:alt" content="{{OG_IMAGE_ALT}}" />
+  <meta property="og:url" content="{{WEBSITE_URL}}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="template.css" />
+
+
+  <link rel="canonical" href="https://inviata.in/Radhika-Ritesh/" />
+  <meta property="og:url" content="https://inviata.in/Radhika-Ritesh/" />
+  <meta name="twitter:url" content="https://inviata.in/Radhika-Ritesh/" />
+  <meta name="description" content="Tap to open your invitation." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Inviata" />
+  <meta property="og:title" content="Radhika &amp; Ritesh – Wedding Edition" />
+  <meta property="og:description" content="Tap to open your invitation." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/maryam-FOLDS/Radhika-Ritesh/refs/heads/main/imageft.png" />
+  <meta property="og:image:secure_url" content="https://raw.githubusercontent.com/maryam-FOLDS/Radhika-Ritesh/refs/heads/main/imageft.png" />
+  <meta property="og:image:alt" content="Radhika & Ritesh – Wedding Edition · An Inviata Experience" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Radhika &amp; Ritesh – Wedding Edition" />
+  <meta name="twitter:description" content="Tap to open your invitation." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/maryam-FOLDS/Radhika-Ritesh/refs/heads/main/imageft.png" />
+  <link rel="image_src" href="https://raw.githubusercontent.com/maryam-FOLDS/Radhika-Ritesh/refs/heads/main/imageft.png" />
+  <link rel="preconnect" href="https://raw.githubusercontent.com" />
+</head>
+<body class="locked">
+  <div class="falling-layer" id="fallingLayer"></div>
+  <div class="confetti" id="confetti"></div>
+
+  <main class="mobile-shell">
+    <section class="landing screen" id="landing">
+      <div class="corner-botanicals"><span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span></div>
+      <div class="landing-spacer"></div>
+      <div class="envelope-wrap">
+        <!-- DYNAMIC: envelope image = image uploaded in Tab 1 of the customer form -->
+        <button class="envelope-btn" id="openEnvelope" aria-label="Open invitation">
+          <img src="{{ENVELOPE_IMAGE}}" alt="Invitation envelope" / decoding="async">
+        </button>
+      </div>
+      <div class="footer-copy">
+        <div class="script">You're invited</div>
+        <div class="sub">Tap to open your invitation</div>
+      </div>
+    </section>
+
+    <div class="invitation" id="invitation">
+      <section class="hero reveal-up">
+        <!-- DYNAMIC: first image on the second (invitation) interface = image uploaded in Tab 2 of the customer form -->
+        <img src="{{HERO_IMAGE}}" alt="Radhika and Ritesh invitation visual" / decoding="async">
+      </section>
+
+      <section class="white-section scratch-area reveal-up">
+        <div class="scratch-heading">Scratch to reveal date</div>
+        <div class="scratch-card" id="scratchCard">
+          <div class="scratch-underlay">
+            <div class="save">Save the date</div>
+            <!-- DYNAMIC: This is the WEDDING date only (even if other events like
+                 Haldi/Sangeet exist). Format = Date + Month in WORDS + Year
+                 (e.g. "17 September 2026"), never numeric month.
+                 data-target = same date in ISO form, used by the countdown JS
+                 below so the visible date and the countdown are ALWAYS in sync.
+                 When filling this template, update BOTH the text and data-target
+                 together, to the same date. -->
+            <div class="date" data-target="{{REVEAL_DATE_ISO}}">{{REVEAL_DATE_TEXT}}</div>
+          </div>
+          <div class="scratch-overlay" id="scratchOverlay">
+            <canvas id="scratchCanvas"></canvas>
+          </div>
+        </div>
+        <div class="countdown-wrap" id="countdownWrap">
+          <div class="countdown-title">Countdown to the celebration</div>
+          <div class="countdown" id="countdown"></div>
+        </div>
+      </section>
+
+      <section class="events reveal-up">
+        <div class="corner-botanicals"><span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span></div>
+        <h2 class="section-title">Events schedule</h2>
+        <!--
+          DYNAMIC EVENT CARDS (sample below shows 5 for reference only):
+          The number of .event-card blocks must equal the number of events the
+          customer added in the form (e.g. Haldi, Sangeet, Wedding).
+            - 1 event added  -> only 1 card, using that event's uploaded image.
+            - 3 events added -> 3 cards, each with its own uploaded image URL,
+              in the same order and same markup/style as below.
+          Card structure/style stays identical every time; only the COUNT of
+          cards and their image src URLs change per customer.
+        -->
+        <div class="cards">
+          {{EVENTS_HTML}}
+        </div>
+      </section>
+
+      <section class="full-image-section reveal-up">
+        <!-- STATIC: this image is always the same for every invitation. Do not replace per customer. -->
+        <img src="https://raw.githubusercontent.com/inviataorders/Vamsi-Roshni/refs/heads/main/Presence.webp" alt="Noble presence" / decoding="async">
+      </section>
+
+      <section class="family reveal-up">
+        <div class="corner-botanicals"><span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span></div>
+        <div class="with-love">WITH LOVE</div>
+        <div class="families">{{FAMILY_NAME}}</div>
+        <div class="presence-box">
+          <div class="small">AWAITING YOUR GRACIOUS<br/>PRESNCE</div>
+          <div class="name">{{PRESENCE_HTML}}</div>
+        </div>
+      </section>
+
+      <section class="venue reveal-up">
+        <div class="eyebrow">Venue</div>
+        <h2>Where we will Celebrate</h2>
+        <!--
+          DYNAMIC, PER EVENT: repeat the (venue-address + map-frame + map-link)
+          block below once for EVERY event that has BOTH a venue name AND a map
+          URL filled in the form.
+            - If an event has only a venue name typed but no map URL, skip the
+              map-frame/map-link for that event entirely (venue name only, no map).
+            - Example: Haldi (name only) / Sangeet (name+url) / Wedding (name+url)
+              -> only 2 blocks are generated, for Sangeet and Wedding.
+          Keep the same markup/style per block, just repeat it per qualifying event.
+        -->
+        {{VENUES_HTML}}
+      </section>
+
+      <section class="closing reveal-up">
+        <!-- "With love" is STATIC. Names below are DYNAMIC: order (Bride&Groom
+             vs Groom&Bride) follows whichever name the customer chose to list
+             first in the form. "An Inviata Experience" + Instagram + phone
+             number (in line3 below) are always STATIC / fixed. -->
+        <div class="line1">With love</div>
+        <div class="line2">({{COUPLE_NAMES_COMPACT}})</div>
+        <div class="line3"><span class="inviata-signature"><span class="inviata-signature-main">An Inviata Experience</span><span class="inviata-signature-row"><a class="inviata-signature-link" href="https://www.instagram.com/inviata.in?igsh=MXJmeHh2c2J1cTZ1OA==" target="_blank" rel="noopener noreferrer" aria-label="Inviata on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2m0 1.8A3.7 3.7 0 0 0 3.8 7.5v9a3.7 3.7 0 0 0 3.7 3.7h9a3.7 3.7 0 0 0 3.7-3.7v-9a3.7 3.7 0 0 0-3.7-3.7zm9.45 1.35a1.05 1.05 0 1 1 0 2.1 1.05 1.05 0 0 1 0-2.1M12 6.85A5.15 5.15 0 1 1 6.85 12 5.15 5.15 0 0 1 12 6.85m0 1.8A3.35 3.35 0 1 0 15.35 12 3.35 3.35 0 0 0 12 8.65"/></svg><span>inviata</span></a><span class="inviata-signature-sep">|</span><span class="inviata-signature-phone">+91 9537934186</span></span><span class="inviata-signature-reserved" aria-hidden="true"></span></span></div>
+      </section>
+    </div>
+  </main>
+
+  <audio id="bgMusic" preload="auto" loop playsinline>
+    <source src="{{MUSIC_URL}}" type="audio/mpeg" />
+  </audio>
+
+  <script src="template.js" defer></script>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
