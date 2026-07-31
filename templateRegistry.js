@@ -198,7 +198,7 @@ if (els.ordersViewBtn && els.templatesViewBtn && els.templatesShell) {
     }
     const selected = getSelectedTemplate();
     if (!selected) {
-      els.workspace.innerHTML = `<section class="blank"><div><h2>Template Registry</h2><p>Create a template record to manage publish state, file bindings, image requirements, supported events, and generation metadata without touching the customer order workflow.</p></div></section>`;
+      els.workspace.innerHTML = `<section class="blank"><div><h2>Template Registry</h2><p>Create a template record to manage publish state, file bindings, image requirements, supported events, and generation metadata without changing the customer order workflow.</p></div></section>`;
       return;
     }
     if (state.mode === "edit") {
