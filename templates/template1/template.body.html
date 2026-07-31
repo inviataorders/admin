@@ -306,7 +306,7 @@
     </div>
   </main>
 
-  <audio id="bgMusic" preload="auto" loop playsinline>
+  <audio id="bgMusic" preload="auto" playsinline>
     <source src="{{MUSIC_URL}}" type="audio/mpeg" />
   </audio>
 
@@ -320,6 +320,9 @@
     const confetti = document.getElementById('confetti');
     const countdownWrap = document.getElementById('countdownWrap');
     const countdownEl = document.getElementById('countdown');
+    const musicLoopStart = Math.max(0, Number('{{MUSIC_START_SECONDS}}') || 0);
+    const musicLoopEndRaw = '{{MUSIC_END_SECONDS}}';
+    const musicLoopEnd = musicLoopEndRaw === '' ? null : Number(musicLoopEndRaw);
     let invitationOpened = false;
     let countdownStarted = false;
     let countdownInterval = null;
@@ -340,6 +343,30 @@
       }
     }
 
+    function resetMusicPosition() {
+      if (!bgMusic) return;
+      try {
+        bgMusic.currentTime = musicLoopStart;
+      } catch (_) {}
+    }
+
+    function syncMusicLoop() {
+      if (!bgMusic) return;
+      if (musicLoopEnd && musicLoopEnd > musicLoopStart && bgMusic.currentTime >= musicLoopEnd) {
+        resetMusicPosition();
+        bgMusic.play().catch(() => {});
+      }
+    }
+
+    bgMusic.addEventListener('loadedmetadata', () => {
+      if (musicLoopStart > 0) resetMusicPosition();
+    });
+    bgMusic.addEventListener('timeupdate', syncMusicLoop);
+    bgMusic.addEventListener('ended', () => {
+      resetMusicPosition();
+      if (invitationOpened) bgMusic.play().catch(() => {});
+    });
+
     function startInvitation() {
       if (invitationOpened) return;
       invitationOpened = true;
@@ -349,7 +376,7 @@
       invitation.classList.add('active');
       fallingLayer.classList.add('active');
       createFallingElements();
-      bgMusic.currentTime = 0;
+      resetMusicPosition();
       bgMusic.play().catch(() => {});
       setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
     }
@@ -358,7 +385,7 @@
 
     function stopMusic() {
       bgMusic.pause();
-      bgMusic.currentTime = 0;
+      resetMusicPosition();
     }
     window.addEventListener('pagehide', stopMusic);
     window.addEventListener('beforeunload', stopMusic);
@@ -536,6 +563,7 @@
   </script>
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79"}' crossorigin="anonymous"></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79"}' crossorigin="anonymous"></script>
 </body>
 </html>
